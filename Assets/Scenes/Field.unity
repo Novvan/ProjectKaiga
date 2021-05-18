@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -20714,11 +20714,6 @@ PrefabInstance:
         type: 3}
       propertyPath: _sfx.Array.size
       value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5582725420528995434, guid: 53cbe72c3d2efa845ab20e98c2356993,
-        type: 3}
-      propertyPath: _canBeShot.m_Bits
-      value: 311
       objectReference: {fileID: 0}
     - target: {fileID: 5582725420528995434, guid: 53cbe72c3d2efa845ab20e98c2356993,
         type: 3}

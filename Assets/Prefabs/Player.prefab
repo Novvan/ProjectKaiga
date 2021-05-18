@@ -826,7 +826,7 @@ MonoBehaviour:
     type: 3}
   _canBeShot:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 311
 --- !u!1 &4901885669120705800
 GameObject:
   m_ObjectHideFlags: 0
@@ -1052,7 +1052,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3015124147329226527
 RectTransform:
   m_ObjectHideFlags: 0

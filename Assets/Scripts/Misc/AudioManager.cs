@@ -13,17 +13,17 @@ public class AudioManager : MonoBehaviour
     {
         if (instance != null)
         {
-            Destroy(gameObject);
+            Destroy(this.gameObject);
         }
         else
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(this.gameObject);
         }
 
         foreach (Sound s in sounds)
         {
-            s.source = gameObject.AddComponent<AudioSource>();
+            s.source = this.gameObject.AddComponent<AudioSource>();
             s.source.clip = s.clip;
             s.source.loop = s.loop;
 

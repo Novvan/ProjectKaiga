@@ -64,41 +64,58 @@ public class WeaponHandler : MonoBehaviour
 
     private void _checkForInputs()
     {
-        if (Input.GetKeyDown(_input.firstWeapon))
+        if (!_reloading)
         {
-            _equipGun(0);
-        }
-        else if (Input.GetKeyDown(_input.secondWeapon))
-        {
-            _equipGun(1);
-        }
-        else if (_currentWeapon != null && !_reloading)
-        {
-            _aim(Input.GetMouseButton(_input.aim));
-            if (Input.GetMouseButton(_input.shoot) && _cooldown <= 0)
+
+            if (Input.GetKeyDown(_input.firstWeapon))
             {
-                _shoot();
+                _equipGun(0);
             }
-            if (Input.GetKeyDown(_input.reload))
+            else if (Input.GetKeyDown(_input.secondWeapon))
             {
-                StartCoroutine(_reloadWeapon());
+                _equipGun(1);
             }
+            else if (_currentWeapon != null)
+            {
+                _aim(Input.GetMouseButton(_input.aim));
+                if (Input.GetMouseButton(_input.shoot) && _cooldown <= 0)
+                {
+                    _shoot();
+                }
+                if (Input.GetKeyDown(_input.reload))
+                {
+                    StartCoroutine(_reloadWeapon());
+                }
+            }
+            _cooldown -= Time.deltaTime;
         }
-        _cooldown -= Time.deltaTime;
     }
 
     IEnumerator _reloadWeapon()
     {
-        _reloading = true;
-        FindObjectOfType<AudioManager>().Play("Reload");
-        int _remainingClip = _playerLoadout[_currentWeaponIndex].clipAmmo;
-        _playerLoadout[_currentWeaponIndex].clipAmmo = _playerLoadout[_currentWeaponIndex].magazineSize;
-        _playerLoadout[_currentWeaponIndex].reserveAmmo -= _playerLoadout[_currentWeaponIndex].clipAmmo + _remainingClip;
-        _currentWeapon.SetActive(false);
+        if (_playerLoadout[_currentWeaponIndex].reserveAmmo > 0)
+        {
+            _reloading = true;
 
-        yield return new WaitForSeconds(_playerLoadout[_currentWeaponIndex].reloadTime);
-        _reloading = false;
-        _currentWeapon.SetActive(true);
+            int _remainingClip = _playerLoadout[_currentWeaponIndex].clipAmmo;
+
+            for (int i = _remainingClip; i < _playerLoadout[_currentWeaponIndex].magazineSize; i++)
+            {
+                _playerLoadout[_currentWeaponIndex].reserveAmmo--;
+                _playerLoadout[_currentWeaponIndex].clipAmmo++;
+            }
+
+            _currentWeapon.SetActive(false);
+            FindObjectOfType<AudioManager>().Play("Reload");
+            yield return new WaitForSeconds(_playerLoadout[_currentWeaponIndex].reloadTime);
+            _reloading = false;
+            _currentWeapon.SetActive(true);
+        }
+        else
+        {
+            FindObjectOfType<AudioManager>().Play("NoAmmo");
+            yield break;
+        }
     }
 
     private void _equipGun(int i)
