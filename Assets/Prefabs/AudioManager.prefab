@@ -1,0 +1,83 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7405439710557596370
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7405439710557596369}
+  - component: {fileID: 7405439710557596368}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7405439710557596369
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7405439710557596370}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7405439710557596368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7405439710557596370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e91ea82043b00f45bc9ad2329860377, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mixerGroup: {fileID: 0}
+  sounds:
+  - name: Gunshot
+    clip: {fileID: 8300000, guid: e448ce3e25c8e714a96a286b2ff4dff4, type: 3}
+    volume: 0.2
+    volumeVariance: 0.45
+    pitch: 1
+    pitchVariance: 0.5
+    loop: 0
+    mixerGroup: {fileID: 24300002, guid: 8bf51e452c5596b42b3eb8e5f380ced5, type: 2}
+    source: {fileID: 0}
+  - name: Theme
+    clip: {fileID: 8300000, guid: 5efaf5974fe3db44e9fe705f2697e667, type: 3}
+    volume: 0.2
+    volumeVariance: 0.45
+    pitch: 1
+    pitchVariance: 0.5
+    loop: 0
+    mixerGroup: {fileID: 24300002, guid: 8bf51e452c5596b42b3eb8e5f380ced5, type: 2}
+    source: {fileID: 0}
+  - name: NoAmmo
+    clip: {fileID: 8300000, guid: 5efaf5974fe3db44e9fe705f2697e667, type: 3}
+    volume: 0.2
+    volumeVariance: 0.45
+    pitch: 1
+    pitchVariance: 0.5
+    loop: 0
+    mixerGroup: {fileID: 24300002, guid: 8bf51e452c5596b42b3eb8e5f380ced5, type: 2}
+    source: {fileID: 0}
+  - name: Reload
+    clip: {fileID: 8300000, guid: fd3ebda80e9a4414782b76a55cfd4f5d, type: 3}
+    volume: 0.2
+    volumeVariance: 0.45
+    pitch: 1
+    pitchVariance: 0.5
+    loop: 0
+    mixerGroup: {fileID: 24300002, guid: 8bf51e452c5596b42b3eb8e5f380ced5, type: 2}
+    source: {fileID: 0}
