@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     #region Variables
-    public int score;
+    private int score;
     private PlayerController _player;
     private GameManager _instance;
     private Camera _mainCamera;
@@ -40,7 +40,6 @@ public class GameManager : MonoBehaviour
     public void KilledEnemy()
     {
         score++;
-        Debug.Log(score);
     }
     #endregion
 }
