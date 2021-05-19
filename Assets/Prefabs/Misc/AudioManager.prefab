@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7405439710557596370
+--- !u!1 &1465984243811818213
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,23 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7405439710557596369}
-  - component: {fileID: 4924724561381341179}
-  - component: {fileID: 8875764967058614479}
-  m_Layer: 0
-  m_Name: Manager
-  m_TagString: Untagged
+  - component: {fileID: 1465984243811818203}
+  - component: {fileID: 1465984243811818202}
+  m_Layer: 2
+  m_Name: AudioManager
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7405439710557596369
+--- !u!4 &1465984243811818203
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7405439710557596370}
+  m_GameObject: {fileID: 1465984243811818213}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -32,13 +31,13 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4924724561381341179
+--- !u!114 &1465984243811818202
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7405439710557596370}
+  m_GameObject: {fileID: 1465984243811818213}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d355a991e3cb76f499b4ceb802a1b0c3, type: 3}
@@ -48,10 +47,10 @@ MonoBehaviour:
   sounds:
   - name: Theme
     clip: {fileID: 8300000, guid: 741126589b7702d408aa344a4d0de4e3, type: 3}
-    volume: 0.302
-    volumeVariance: 0.178
-    pitch: 2.03
-    pitchVariance: 0.549
+    volume: 0.185
+    volumeVariance: 0.468
+    pitch: 1.29
+    pitchVariance: 0.191
     loop: 1
     mixerGroup: {fileID: 24300002, guid: 8bf51e452c5596b42b3eb8e5f380ced5, type: 2}
     source: {fileID: 0}
@@ -82,12 +81,12 @@ MonoBehaviour:
     loop: 0
     mixerGroup: {fileID: 24300002, guid: 8bf51e452c5596b42b3eb8e5f380ced5, type: 2}
     source: {fileID: 0}
-  - name: Hit
+  - name: Shot
     clip: {fileID: 8300000, guid: e448ce3e25c8e714a96a286b2ff4dff4, type: 3}
-    volume: 0.62
-    volumeVariance: 0.35
-    pitch: 2.27
-    pitchVariance: 0.44
+    volume: 0.106
+    volumeVariance: 0.311
+    pitch: 1.76
+    pitchVariance: 0.291
     loop: 0
     mixerGroup: {fileID: 24300002, guid: 8bf51e452c5596b42b3eb8e5f380ced5, type: 2}
     source: {fileID: 0}
@@ -109,16 +108,12 @@ MonoBehaviour:
     loop: 0
     mixerGroup: {fileID: 24300002, guid: 8bf51e452c5596b42b3eb8e5f380ced5, type: 2}
     source: {fileID: 0}
---- !u!114 &8875764967058614479
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7405439710557596370}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a79257531210c44c90657f8ba2bef0c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _player: {fileID: 11400000, guid: 776ad1ec07b2547458dca4009527a30a, type: 2}
+  - name: Hitmark
+    clip: {fileID: 8300000, guid: e2e2161a085854447809f2b00d86e238, type: 3}
+    volume: 0.589
+    volumeVariance: 0.033
+    pitch: 1.47
+    pitchVariance: 0.126
+    loop: 0
+    mixerGroup: {fileID: 24300002, guid: 8bf51e452c5596b42b3eb8e5f380ced5, type: 2}
+    source: {fileID: 0}

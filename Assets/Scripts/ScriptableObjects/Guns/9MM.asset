@@ -21,9 +21,11 @@ MonoBehaviour:
   recoil: 2.5
   kickback: 0.05
   hitArea: 1
-  clipAmmo: 3
-  reserveAmmo: 104
+  damage: 15
+  headshotDamage: 60
+  clipAmmo: 8
+  reserveAmmo: 24
   magazineSize: 8
-  maxAmmo: 24
+  maxAmmo: 88
   reloadTime: 0.5
   adsSpeed: 20

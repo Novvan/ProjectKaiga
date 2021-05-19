@@ -14,8 +14,12 @@ public class MenuManager : MonoBehaviour
     #region MonoBehaviour callbacks
     private void Start()
     {
-        _currentMenu = baseMenu;
-        _currentMenu.SetActive(true);
+        if (baseMenu != null)
+        {
+
+            _currentMenu = baseMenu;
+            _currentMenu.SetActive(true);
+        }
     }
     #endregion
 
@@ -41,6 +45,10 @@ public class MenuManager : MonoBehaviour
         Application.Quit();
     }
 
+    public void replay()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
     public void play()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);

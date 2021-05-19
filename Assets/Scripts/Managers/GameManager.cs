@@ -1,15 +1,19 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     #region Variables
-    private int score;
-    private PlayerController _player;
+    private int _score;
     private GameManager _instance;
-    private Camera _mainCamera;
+    [SerializeField] private PlayerController _pc;
+    public bool bossDead = false;
+    public GameObject victoryCanvas;
+    public GameObject hud;
     #endregion
+    public int Score => _score;
 
     #region MonoBehaviour callbacks
     void Awake()
@@ -27,11 +31,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         FindObjectOfType<AudioManager>().Play("Theme");
-        _player = FindObjectOfType<PlayerController>();
     }
-
-    private void Update()
-    { }
     private void LateUpdate()
     { }
     #endregion
@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
     #region Custom callbacks
     public void KilledEnemy()
     {
-        score++;
+        _score++;
     }
     #endregion
 }

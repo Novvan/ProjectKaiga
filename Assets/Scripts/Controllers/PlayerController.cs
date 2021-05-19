@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(InputHandler))]
@@ -6,14 +7,15 @@
 public class PlayerController : MonoBehaviour, IController
 {
     #region Variables
-
-
     [Header("Scripts")]
     [SerializeField] private Player _player;
+    public event Action<float> OnHealthPrcChange = delegate { };
     private float _currentHealth;
+    private float _currentHPrc;
     private Rigidbody _rb;
     private InputHandler _input;
     private PlayerHandler _ph;
+    private WeaponHandler _wpH;
 
     [Header("Movement")]
     private float _baseSpeed = 1f;
@@ -23,6 +25,8 @@ public class PlayerController : MonoBehaviour, IController
     private Vector3 _slopeMoveDirection;
 
     [Header("Camera")]
+    [SerializeField] private GameObject _camPrefab;
+    [SerializeField] private Transform _cameraDeadLocation;
     [SerializeField] private Transform _camHolder;
     [SerializeField] private Transform _weapon;
     private float _mouseY;
@@ -38,13 +42,15 @@ public class PlayerController : MonoBehaviour, IController
     private float _groundDistance = 0.4f;
     private RaycastHit _slopeHit;
     private bool _isAlive;
-
+    public GameObject victoryCanvas;
+    public GameObject loseCanvas;
+    public GameObject hud;
+    [SerializeField] private GameManager _gm;
+    private bool _newCamAlive;
+    #endregion
     public bool IsAlive => _isAlive;
 
-    #endregion
-
     #region MonoBehaviour callbacks
-
     private void Awake()
     {
         _currentHealth = _player.maxhealth;
@@ -56,6 +62,7 @@ public class PlayerController : MonoBehaviour, IController
         // _wallRun = this.GetComponent<WallRun>();
         _input = this.GetComponent<InputHandler>();
         _ph = this.GetComponent<PlayerHandler>();
+        _wpH = this.GetComponent<WeaponHandler>();
 
         _rb.freezeRotation = true;
         Cursor.lockState = CursorLockMode.Locked;
@@ -66,9 +73,17 @@ public class PlayerController : MonoBehaviour, IController
     {
         _isGrounded = Physics.CheckSphere(_groundCheck.position, _groundDistance, _groundMask);
 
-        _inputHandler();
-        _ph.controlDrag(_isGrounded, _player.groundDrag, _player.airDrag);
-        _controlSpeed();
+        if (_isAlive && !_gm.bossDead)
+        {
+            _inputHandler();
+            _wpH.checkForInputs();
+            _ph.controlDrag(_isGrounded, _player.groundDrag, _player.airDrag);
+            _controlSpeed();
+        }
+        if (_gm.bossDead)
+        {
+            _playerVictory();
+        }
     }
 
     private void FixedUpdate()
@@ -76,9 +91,19 @@ public class PlayerController : MonoBehaviour, IController
         if (_currentHealth <= 0)
         {
             _isAlive = false;
+            if (!_newCamAlive)
+            {
+                Instantiate(_camPrefab, _cameraDeadLocation.position, Quaternion.identity);
+                _newCamAlive = true;
+            }
+            _playerDead();
             Destroy(gameObject);
         }
-        Move();
+        else
+        {
+            _isAlive = true;
+            Move();
+        }
     }
 
     #endregion
@@ -95,11 +120,9 @@ public class PlayerController : MonoBehaviour, IController
         else if (_isGrounded && _slopeHandling()) _ph.move(_slopeMoveDirection, _baseSpeed);
         else _ph.move(_moveDirection, _baseSpeed * _player.airMoveMultiplier);
     }
-
     #endregion
 
     #region Custom callbacks
-
     private void _inputHandler()
     {
         // Keyboard Inputs
@@ -161,8 +184,28 @@ public class PlayerController : MonoBehaviour, IController
 
     public void takeDamage(float damage)
     {
-        _currentHealth = _ph.takeDamage(damage, _currentHealth);
+        _currentHealth = _ph.modifyHealth(-damage, _currentHealth);
+        _currentHPrc = _currentHealth / _player.maxhealth;
+
+
+        OnHealthPrcChange(_currentHPrc);
     }
 
+    private void _playerDead()
+    {
+        loseCanvas.SetActive(true);
+        Time.timeScale = 0;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    private void _playerVictory()
+    {
+        Time.timeScale = 0;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        hud.SetActive(false);
+        victoryCanvas.SetActive(true);
+    }
     #endregion
 }

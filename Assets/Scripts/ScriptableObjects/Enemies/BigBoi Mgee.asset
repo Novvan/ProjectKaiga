@@ -10,9 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3ddbfbfa3961c504785deee15167478c, type: 3}
-  m_Name: BigBoiMgee
+  m_Name: BigBoi Mgee
   m_EditorClassIdentifier: 
   destructible: 1
-  health: 0
-  maxhealth: 0
-  moveSpeed: 0
+  maxhealth: 5000
+  moveSpeed: 4
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 256
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 512
+  sightRange: 20
+  attackRange: 4
+  damage: 350
+  playerInSightRange: 0
+  playerInAttackRange: 0
+  walkPointRange: 30
+  timeBetweenAttacks: 0

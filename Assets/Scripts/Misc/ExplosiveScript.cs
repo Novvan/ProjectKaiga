@@ -28,7 +28,8 @@ public class ExplosiveScript : MonoBehaviour
                 }
                 else if (collider.tag == "Enemy")
                 {
-                    collider.GetComponent<EnemyController>().takeDamage(explosionPower);
+                    Debug.Log("enemy explo");
+                    collider.transform.root.GetComponent<EnemyController>().takeDamage(explosionPower * 2);
                     collider.GetComponent<Rigidbody>().AddForce((collider.transform.position - this.transform.position) * explosionPower + collider.transform.up * explosionPower * 2f);
                 }
             }

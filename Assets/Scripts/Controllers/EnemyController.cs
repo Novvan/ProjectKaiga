@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
@@ -6,20 +7,23 @@ public class EnemyController : MonoBehaviour, IController
 {
     #region Variables
     public Enemy enemyData;
+    public event Action<float> OnHealthPrcChange = delegate { };
+    private float _currentHPrc;
     private float _currentHealth;
     private NavMeshAgent _agent;
-    public bool alreadyAttacked;
-    public bool walkPointSet;
+    [HideInInspector] public bool alreadyAttacked;
+    [HideInInspector] public bool walkPointSet;
     private Vector3 _newWalkPoint;
     private Transform _player;
+    [SerializeField] private float _attackCD;
     #endregion
+    public float currentHealth => _currentHealth;
 
     #region MonoBehaviour callbacks
     public virtual void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
         _currentHealth = enemyData.maxhealth;
-        GetComponent<ExplosiveScript>().explosionRadius = enemyData.attackRange;
         _player = FindObjectOfType<PlayerController>().gameObject.transform;
     }
 
@@ -37,11 +41,6 @@ public class EnemyController : MonoBehaviour, IController
         Gizmos.DrawWireSphere(transform.position, enemyData.attackRange);
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, enemyData.sightRange);
-    }
-
-    private void OnDestroy()
-    {
-        FindObjectOfType<GameManager>().KilledEnemy();
     }
     #endregion
 
@@ -62,6 +61,7 @@ public class EnemyController : MonoBehaviour, IController
     {
         _agent.SetDestination(transform.position);
         transform.LookAt(_player);
+        Invoke(nameof(resetAttack), _attackCD);
     }
     private void resetAttack()
     {
@@ -69,18 +69,26 @@ public class EnemyController : MonoBehaviour, IController
     }
     public void takeDamage(float damage)
     {
-        _currentHealth -= damage;
+        _modifyHealth(-damage);
+    }
+    private void _modifyHealth(float mod)
+    {
+        _currentHealth += mod;
+        _currentHPrc = _currentHealth / enemyData.maxhealth;
+
+        OnHealthPrcChange(_currentHPrc);
     }
 
     public virtual void destroyCharacter()
     {
-        Destroy(gameObject);
+        FindObjectOfType<GameManager>().KilledEnemy();
+        Destroy(gameObject, 0.1f);
     }
 
     private void _searchWalkPoint()
     {
-        float randomZ = Random.Range(-enemyData.walkPointRange, enemyData.walkPointRange);
-        float randomX = Random.Range(-enemyData.walkPointRange, enemyData.walkPointRange);
+        float randomZ = UnityEngine.Random.Range(-enemyData.walkPointRange, enemyData.walkPointRange);
+        float randomX = UnityEngine.Random.Range(-enemyData.walkPointRange, enemyData.walkPointRange);
 
         _newWalkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
 

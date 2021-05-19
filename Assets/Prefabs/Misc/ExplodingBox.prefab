@@ -129,10 +129,9 @@ MonoBehaviour:
     type: 3}
   layerMask:
     serializedVersion: 2
-    m_Bits: 2560
+    m_Bits: 4294967295
   explosionPower: 100
   explosionRadius: 7.5
-  explosionRange: 25
 --- !u!65 &4745648152147962745
 BoxCollider:
   m_ObjectHideFlags: 0

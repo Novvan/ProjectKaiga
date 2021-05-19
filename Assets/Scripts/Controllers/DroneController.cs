@@ -8,26 +8,26 @@ public class DroneController : EnemyController, IController
     #endregion
 
     #region MonoBehaviour callbacks
-
     public override void Start()
     {
         base.Start();
+        this.GetComponent<ExplosiveScript>().explosionRadius = enemyData.attackRange;
     }
 
     public override void Update()
     {
         base.Update();
-
-        if (!enemyData.playerInSightRange && !enemyData.playerInAttackRange) Move();
-        else if (enemyData.playerInSightRange && !enemyData.playerInAttackRange) ChasePlayer();
-        else if (enemyData.playerInSightRange && enemyData.playerInAttackRange) AttackPlayer();
+        if (currentHealth > 0)
+        {
+            if (!enemyData.playerInSightRange && !enemyData.playerInAttackRange) Move();
+            else if (enemyData.playerInSightRange && !enemyData.playerInAttackRange) ChasePlayer();
+            else if (enemyData.playerInSightRange && enemyData.playerInAttackRange) AttackPlayer();
+        }
 
     }
-
     #endregion
 
     #region Interface callbacks
-
     public override void Move()
     {
         if (_startedCorroutine)
@@ -68,6 +68,5 @@ public class DroneController : EnemyController, IController
     {
         StartCoroutine("startAttack");
     }
-
     #endregion
 }

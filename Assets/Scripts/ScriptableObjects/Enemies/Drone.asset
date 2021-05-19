@@ -21,11 +21,10 @@ MonoBehaviour:
   playerMask:
     serializedVersion: 2
     m_Bits: 512
-  walkPoint: {x: 0.24532413, y: 4.166667, z: 6.3121443}
-  sightRange: 15
+  sightRange: 25
   attackRange: 3.5
   damage: 0
   playerInSightRange: 0
   playerInAttackRange: 0
-  walkPointRange: 50
+  walkPointRange: 25
   timeBetweenAttacks: 0

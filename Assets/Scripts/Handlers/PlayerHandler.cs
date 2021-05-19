@@ -53,9 +53,9 @@ public class PlayerHandler : MonoBehaviour
         _rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
 
-    public float takeDamage(float damage, float currentHealth)
+    public float modifyHealth(float mod, float currentHealth)
     {
-        return currentHealth -= damage;
+        return currentHealth += mod;
     }
     #endregion
 

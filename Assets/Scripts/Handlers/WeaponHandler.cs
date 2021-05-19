@@ -8,6 +8,7 @@ public class WeaponHandler : MonoBehaviour
     [Header("References")]
     [SerializeField] private Player _player;
     private InputHandler _input;
+    private AudioManager _am;
 
     [Header("UI")]
     [SerializeField] private GameObject _crossHair;
@@ -29,12 +30,16 @@ public class WeaponHandler : MonoBehaviour
     private Vector3 _hitArea;
     private float _cooldown;
     private bool _reloading;
+
+    public Gun[] PlayerLoadout => _playerLoadout;
+    public int CurrentWeaponIndex => _currentWeaponIndex;
     #endregion
 
     #region MonoBehaviour callbacks
     private void Start()
     {
         _input = this.GetComponent<InputHandler>();
+        _am = FindObjectOfType<AudioManager>();
 
         foreach (var gun in _playerLoadout)
         {
@@ -45,8 +50,6 @@ public class WeaponHandler : MonoBehaviour
 
     private void Update()
     {
-        _checkForInputs();
-
         if (_currentWeapon != null)
         {
             _currentWeapon.transform.localPosition = Vector3.Lerp(_currentWeapon.transform.localPosition, Vector3.zero, Time.deltaTime * 4f);
@@ -57,7 +60,7 @@ public class WeaponHandler : MonoBehaviour
     #endregion
 
     #region Custom callbacks
-    private void _checkForInputs()
+    public void checkForInputs()
     {
         if (!_reloading)
         {
@@ -101,14 +104,14 @@ public class WeaponHandler : MonoBehaviour
             }
 
             _currentWeapon.SetActive(false);
-            FindObjectOfType<AudioManager>().Play("Reload");
+            _am.Play("Reload");
             yield return new WaitForSeconds(_playerLoadout[_currentWeaponIndex].reloadTime);
             _reloading = false;
             _currentWeapon.SetActive(true);
         }
         else
         {
-            FindObjectOfType<AudioManager>().Play("NoAmmo");
+            _am.Play("NoAmmo");
             yield break;
         }
     }
@@ -187,13 +190,13 @@ public class WeaponHandler : MonoBehaviour
         if (_playerLoadout[_currentWeaponIndex].clipAmmo <= 0)
         {
             _cooldown = _playerLoadout[_currentWeaponIndex].rateOfFire;
-            FindObjectOfType<AudioManager>().Play("NoAmmo");
+            _am.Play("NoAmmo");
         }
         else
         {
             RaycastHit _hit;
             Transform _cam = transform.Find("Camera/CameraHolder/Camera");
-            FindObjectOfType<AudioManager>().Play("Hit");
+            _am.Play("Shot");
 
 
             _muzzleFlash.Play();
@@ -204,18 +207,20 @@ public class WeaponHandler : MonoBehaviour
             {
                 if (_hit.collider.tag == "Enemy")
                 {
-                    FindObjectOfType<AudioManager>().Play("Hit");
-                    _hit.collider.GetComponent<EnemyController>().takeDamage(_playerLoadout[_currentWeaponIndex].damage);
+                    _am.Play("Hitmark");
+                    EnemyController _ec = _hit.collider.GetComponent<EnemyController>();
+                    if (_ec != null) _ec.takeDamage(_playerLoadout[_currentWeaponIndex].damage);
                 }
                 else if (_hit.collider.tag == "Explosive")
                 {
-                    FindObjectOfType<AudioManager>().Play("Hit");
                     _hit.collider.GetComponent<ExplosiveScript>().explode();
                 }
                 else if (_hit.collider.tag == "Headshot")
                 {
-                    FindObjectOfType<AudioManager>().Play("Crit");
-                    _hit.collider.GetComponentInParent<EnemyController>().takeDamage(_playerLoadout[_currentWeaponIndex].headshotDamage);
+                    _am.Play("Hitmark");
+                    _am.Play("Crit");
+                    EnemyController _ec = _hit.collider.GetComponentInParent<EnemyController>();
+                    if (_ec != null) _ec.takeDamage(_playerLoadout[_currentWeaponIndex].damage);
                 }
                 else
                 {

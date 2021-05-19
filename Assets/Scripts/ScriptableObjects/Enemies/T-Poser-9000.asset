@@ -13,6 +13,18 @@ MonoBehaviour:
   m_Name: T-Poser-9000
   m_EditorClassIdentifier: 
   destructible: 1
-  health: 0
-  maxhealth: 0
-  moveSpeed: 0
+  maxhealth: 500
+  moveSpeed: 10
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 256
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 512
+  sightRange: 8
+  attackRange: 2
+  damage: 100
+  playerInSightRange: 0
+  playerInAttackRange: 0
+  walkPointRange: 10
+  timeBetweenAttacks: 0
