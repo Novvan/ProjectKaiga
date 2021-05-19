@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - Explosive
+  - Headshot
   layers:
   - Default
   - TransparentFX
@@ -17,7 +19,7 @@ TagManager:
   - Ground
   - LocalPlayer
   - Gun
-  - 
+  - Enemy
   - 
   - 
   - 

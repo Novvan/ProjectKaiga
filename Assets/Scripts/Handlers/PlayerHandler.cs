@@ -2,15 +2,21 @@
 
 public class PlayerHandler : MonoBehaviour
 {
+    #region Variables
     [SerializeField] private float _movementMultiplier = 10;
     private InputHandler _input;
     private Rigidbody _rb;
+    #endregion
 
+    #region MonoBehaviour callbacks
     private void Start()
     {
         _input = this.GetComponent<InputHandler>();
         _rb = this.GetComponent<Rigidbody>();
     }
+    #endregion
+
+    #region Custom callbacks
     public float addMouseRotation(float mouseAxis)
     {
         float multiplier = 0.1f;
@@ -46,4 +52,12 @@ public class PlayerHandler : MonoBehaviour
         _rb.velocity = new Vector3(_rb.velocity.x, 0, _rb.velocity.z);
         _rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
+
+    public float takeDamage(float damage, float currentHealth)
+    {
+        return currentHealth -= damage;
+    }
+    #endregion
+
+
 }

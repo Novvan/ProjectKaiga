@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Base
   m_EditorClassIdentifier: 
   destructible: 1
-  health: 5
-  maxhealth: 5
+  health: 1000
+  maxhealth: 1000
   moveSpeed: 0
   playerHeight: 2
   airMoveMultiplier: 0.2
@@ -25,4 +25,4 @@ MonoBehaviour:
   acceleration: 10
   maxJumps: 2
   jumpForce: 12.5
-  currentJumps: 2
+  currentJumps: 1

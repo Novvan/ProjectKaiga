@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour, IController
 
     [Header("Scripts")]
     [SerializeField] private Player _player;
+    private float _currentHealth;
     private Rigidbody _rb;
     private InputHandler _input;
     private PlayerHandler _ph;
@@ -36,10 +37,18 @@ public class PlayerController : MonoBehaviour, IController
     private bool _isGrounded;
     private float _groundDistance = 0.4f;
     private RaycastHit _slopeHit;
+    private bool _isAlive;
+
+    public bool IsAlive => _isAlive;
 
     #endregion
 
     #region MonoBehaviour callbacks
+
+    private void Awake()
+    {
+        _currentHealth = _player.maxhealth;
+    }
 
     private void Start()
     {
@@ -51,7 +60,6 @@ public class PlayerController : MonoBehaviour, IController
         _rb.freezeRotation = true;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-
     }
 
     private void Update()
@@ -65,6 +73,11 @@ public class PlayerController : MonoBehaviour, IController
 
     private void FixedUpdate()
     {
+        if (_currentHealth <= 0)
+        {
+            _isAlive = false;
+            Destroy(gameObject);
+        }
         Move();
     }
 
@@ -145,5 +158,11 @@ public class PlayerController : MonoBehaviour, IController
 
         _player.currentJumps += 1;
     }
+
+    public void takeDamage(float damage)
+    {
+        _currentHealth = _ph.takeDamage(damage, _currentHealth);
+    }
+
     #endregion
 }

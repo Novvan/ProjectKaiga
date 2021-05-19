@@ -6,12 +6,13 @@ public class Gun : ScriptableObject
     public string gunName;
     public GameObject prefab;
     public GameObject bulletPrefab;
-
     public float range = 100;
     public float rateOfFire = 24;
     public float recoil = 10;
     public float kickback = 0.1f;
     public float hitArea = 1;
+    public float damage = 15;
+    public float headshotDamage = 60;
     [HideInInspector] public int clipAmmo;
     [HideInInspector] public int reserveAmmo;
     public int magazineSize = 8;

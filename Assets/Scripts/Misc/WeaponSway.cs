@@ -6,15 +6,12 @@ using UnityEngine;
 public class WeaponSway : MonoBehaviour
 {
     #region Variables
-
     public float intensity = 1;
     public float smooth = 10;
     private Quaternion _origin;
-
     #endregion
 
     #region MonoBehaviour callbacks
-
     private void Start()
     {
         _origin = transform.localRotation;
@@ -24,11 +21,9 @@ public class WeaponSway : MonoBehaviour
     {
         _applySway();
     }
-
     #endregion
 
     #region Custom callbacks
-
     private void _applySway()
     {
         float _mouseY = Input.GetAxisRaw("Mouse Y");
@@ -41,6 +36,5 @@ public class WeaponSway : MonoBehaviour
         transform.localRotation = Quaternion.Lerp(transform.localRotation, _finalRotation, Time.deltaTime * smooth);
 
     }
-
     #endregion
 }

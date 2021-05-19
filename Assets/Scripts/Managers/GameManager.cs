@@ -4,7 +4,14 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    #region Variables
+    public int score;
+    private PlayerController _player;
     private GameManager _instance;
+    private Camera _mainCamera;
+    #endregion
+
+    #region MonoBehaviour callbacks
     void Awake()
     {
         if (_instance != null)
@@ -20,5 +27,20 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         FindObjectOfType<AudioManager>().Play("Theme");
+        _player = FindObjectOfType<PlayerController>();
     }
+
+    private void Update()
+    { }
+    private void LateUpdate()
+    { }
+    #endregion
+
+    #region Custom callbacks
+    public void KilledEnemy()
+    {
+        score++;
+        Debug.Log(score);
+    }
+    #endregion
 }

@@ -6,6 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(InputHandler))]
 public class WallRun : MonoBehaviour
 {
+    #region Variables
     [Header("Movement")]
     [SerializeField] private Transform _orientation;
 
@@ -14,7 +15,7 @@ public class WallRun : MonoBehaviour
     [SerializeField] private float _minimumJumpHeight = 1.5f;
 
     [Header("Wall Run")]
-    [SerializeField] private float _wallRunGrav = 1f;
+    [SerializeField] private float _wallRunGravity = 1f;
     [SerializeField] private float _wallJumpForce = 6f;
 
     [Header("Camera")]
@@ -34,7 +35,9 @@ public class WallRun : MonoBehaviour
     private RaycastHit _rightRaycastHit;
     private Rigidbody _rb;
     private InputHandler _input;
+    #endregion
 
+    #region MonoBehaviour callbacks
     private void Start()
     {
         _rb = this.GetComponent<Rigidbody>();
@@ -68,7 +71,9 @@ public class WallRun : MonoBehaviour
             _stopWallRun();
         }
     }
+    #endregion
 
+    #region Custom callbacks
     private bool _canWallRun()
     {
         return !Physics.Raycast(transform.position, Vector3.down, _minimumJumpHeight);
@@ -85,7 +90,7 @@ public class WallRun : MonoBehaviour
         _cam.fieldOfView = Mathf.Lerp(_cam.fieldOfView, _wallRunFov, _wallRunFovTime * Time.deltaTime);
 
         _rb.useGravity = false;
-        _rb.AddForce(Vector3.down * _wallRunGrav, ForceMode.Force);
+        _rb.AddForce(Vector3.down * _wallRunGravity, ForceMode.Force);
 
         if (_wallLeft) tilt = Mathf.Lerp(tilt, -_camTilt, _camTiltTime * Time.deltaTime);
         else if (_wallRight) tilt = Mathf.Lerp(tilt, _camTilt, _camTiltTime * Time.deltaTime);
@@ -115,5 +120,6 @@ public class WallRun : MonoBehaviour
         _cam.fieldOfView = Mathf.Lerp(_cam.fieldOfView, _fov, _wallRunFovTime * Time.deltaTime);
         _rb.useGravity = true;
     }
+    #endregion
 
 }

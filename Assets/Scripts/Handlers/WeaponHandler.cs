@@ -5,7 +5,6 @@ using System.Collections;
 public class WeaponHandler : MonoBehaviour
 {
     #region Variables
-
     [Header("References")]
     [SerializeField] private Player _player;
     private InputHandler _input;
@@ -30,11 +29,9 @@ public class WeaponHandler : MonoBehaviour
     private Vector3 _hitArea;
     private float _cooldown;
     private bool _reloading;
-
     #endregion
 
     #region MonoBehaviour callbacks
-
     private void Start()
     {
         _input = this.GetComponent<InputHandler>();
@@ -57,11 +54,9 @@ public class WeaponHandler : MonoBehaviour
             _weaponNameUI.GetComponent<TMPro.TextMeshProUGUI>().text = _playerLoadout[_currentWeaponIndex].name;
         }
     }
-
     #endregion
 
     #region Custom callbacks
-
     private void _checkForInputs()
     {
         if (!_reloading)
@@ -198,8 +193,8 @@ public class WeaponHandler : MonoBehaviour
         {
             RaycastHit _hit;
             Transform _cam = transform.Find("Camera/CameraHolder/Camera");
+            FindObjectOfType<AudioManager>().Play("Hit");
 
-            FindObjectOfType<AudioManager>().Play("Gunshot");
 
             _muzzleFlash.Play();
 
@@ -209,16 +204,30 @@ public class WeaponHandler : MonoBehaviour
             {
                 if (_hit.collider.tag == "Enemy")
                 {
-                    Debug.Log("enemy hit");
+                    FindObjectOfType<AudioManager>().Play("Hit");
+                    _hit.collider.GetComponent<EnemyController>().takeDamage(_playerLoadout[_currentWeaponIndex].damage);
+                }
+                else if (_hit.collider.tag == "Explosive")
+                {
+                    FindObjectOfType<AudioManager>().Play("Hit");
+                    _hit.collider.GetComponent<ExplosiveScript>().explode();
+                }
+                else if (_hit.collider.tag == "Headshot")
+                {
+                    FindObjectOfType<AudioManager>().Play("Crit");
+                    _hit.collider.GetComponentInParent<EnemyController>().takeDamage(_playerLoadout[_currentWeaponIndex].headshotDamage);
+                }
+                else
+                {
+                    GameObject newHole = Instantiate(_bulletHolePrefab, _hit.point + _hit.normal * 0.001f, Quaternion.identity) as GameObject;
+                    newHole.transform.LookAt(_hit.point + _hit.normal);
+                    Destroy(newHole, 3f);
                 }
 
-                GameObject newHole = Instantiate(_bulletHolePrefab, _hit.point + _hit.normal * 0.001f, Quaternion.identity) as GameObject;
                 GameObject newBullet = Instantiate(_playerLoadout[_currentWeaponIndex].bulletPrefab, _muzzleFlash.transform) as GameObject;
                 newBullet.GetComponent<Rigidbody>().AddForce(newBullet.transform.forward * 25 * Time.deltaTime, ForceMode.Impulse);
-                newHole.transform.LookAt(_hit.point + _hit.normal);
 
                 Destroy(newBullet, 1.5f);
-                Destroy(newHole, 5f);
             }
 
             _currentWeapon.transform.Rotate(_playerLoadout[_currentWeaponIndex].recoil, 0, 0);
@@ -228,6 +237,5 @@ public class WeaponHandler : MonoBehaviour
         }
 
     }
-
     #endregion
 }

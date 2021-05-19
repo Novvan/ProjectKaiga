@@ -13,6 +13,19 @@ MonoBehaviour:
   m_Name: Drone
   m_EditorClassIdentifier: 
   destructible: 1
-  health: 0
-  maxhealth: 0
-  moveSpeed: 0
+  maxhealth: 300
+  moveSpeed: 15
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 256
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 512
+  walkPoint: {x: 0.24532413, y: 4.166667, z: 6.3121443}
+  sightRange: 15
+  attackRange: 3.5
+  damage: 0
+  playerInSightRange: 0
+  playerInAttackRange: 0
+  walkPointRange: 50
+  timeBetweenAttacks: 0

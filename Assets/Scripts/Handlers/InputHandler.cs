@@ -18,6 +18,5 @@ public class InputHandler : MonoBehaviour
     public bool inverted = false;
     [Range(1f, 10f)] public int sensitivityY = 1;
     [Range(1f, 10f)] public int sensitivityX = 1;
-
     #endregion
 }
